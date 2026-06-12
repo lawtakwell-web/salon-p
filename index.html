@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salon P — AI의 파도를 읽는 시간</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="description" content="변호사가 만든 전문직 독서모임, Salon P. 의사, 교수, 변호사, 변리사, 창업가가 함께하는 AI 인문 독서모임.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1e1e1e;
+      --dark-warm: #2b2520;
+      --cream: #faf8f5;
+      --cream-deep: #f3efe9;
+      --white: #ffffff;
+      --gold: #b08d57;
+      --gold-light: #d4bc8e;
+      --gold-pale: #efe6d5;
+      --text: #2b2520;
+      --text-secondary: #6b5e50;
+      --text-tertiary: #9a8d7f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.8;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .serif { font-family: 'Noto Serif KR', serif; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: #2b2520;
+      color: #ffffff;
+      padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(176,141,87,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 60%, rgba(176,141,87,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border: 1px solid var(--gold);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 40px;
+      animation: fadeIn 1s ease 0.3s both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero-pretitle {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+      letter-spacing: 0.08em;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+
+    .hero-brand {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--white);
+      animation: fadeUp 1s ease 0.5s both;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: var(--gold-light);
+      animation: fadeUp 1s ease 0.6s both;
+    }
+
+    .hero-sub {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      line-height: 1.9;
+      margin-bottom: 52px;
+      animation: fadeUp 1s ease 0.7s both;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      background: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+      transition: all 0.3s ease;
+      animation: fadeUp 1s ease 0.8s both;
+    }
+    .hero-cta:hover {
+      background: var(--gold-light);
+      color: var(--dark-warm);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(176,141,87,0.3);
+    }
+    .hero-cta svg {
+      width: 16px; height: 16px;
+      transition: transform 0.3s ease;
+    }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: fadeIn 1s ease 1.5s both;
+    }
+    .hero-scroll .line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: float 2s ease-in-out infinite;
+    }
+
+    /* ── Section Commons ── */
+    section { padding: 100px 24px; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      width: 36px;
+      height: 2px;
+      background: var(--gold);
+      margin: 32px 0;
+      border-radius: 1px;
+    }
+
+    /* ── About / Concept ── */
+    .about { background: var(--cream); }
+
+    .about .concept-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1rem, 1.8vw, 1.12rem);
+      line-height: 2.2;
+      color: var(--text);
+      max-width: 700px;
+    }
+    .about .concept-text em {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .about .concept-highlight {
+      margin-top: 44px;
+      padding: 28px 32px;
+      background: var(--gold-pale);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.02rem;
+      line-height: 2;
+      color: var(--text);
+    }
+
+    .host-info {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .host-avatar {
+      width: 48px; height: 48px;
+      background: var(--dark-warm);
+      color: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+    }
+    .host-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .host-role {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── Themes ── */
+    .themes {
+      background: #2b2520;
+      color: #ffffff;
+    }
+    .themes .section-label { color: var(--gold); }
+    .themes .section-title { color: var(--white); }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .theme-card {
+      padding: 36px 28px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(176,141,87,0.2);
+      border-radius: 16px;
+      transition: all 0.4s ease;
+    }
+    .theme-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(176,141,87,0.4);
+      transform: translateY(-4px);
+    }
+
+    .theme-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: rgba(176,141,87,0.25);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .theme-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .theme-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    .theme-desc {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+
+    /* ── Books ── */
+    .books { background: var(--cream); }
+
+    .book-list {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .book-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 36px;
+      align-items: start;
+      padding: 36px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    .book-item:hover {
+      box-shadow: 0 8px 36px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .book-session {
+      position: absolute;
+      top: -11px;
+      left: 36px;
+      padding: 4px 14px;
+      background: var(--dark-warm);
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .book-cover {
+      width: 150px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transition: transform 0.4s ease;
+    }
+    .book-item:hover .book-cover { transform: scale(1.03); }
+
+    .book-info { padding-top: 4px; }
+
+    .book-date {
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    .book-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .book-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+    }
+
+    .book-author {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .book-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+    }
+
+    .book-theme-tag {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 14px;
+      background: var(--gold-pale);
+      color: var(--text);
+      font-size: 0.76rem;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    /* ── Testimonials ── */
+    .testimonials { background: var(--cream-deep); }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .testimonial-card {
+      padding: 32px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+    }
+    .testimonial-card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .testimonial-quote {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 20px;
+      position: relative;
+      padding-left: 18px;
+    }
+    .testimonial-quote::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 4px;
+      width: 3px;
+      height: calc(100% - 8px);
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .testimonial-author {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .testimonial-author span {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Details ── */
+    .details { background: var(--cream); }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .detail-card {
+      padding: 32px 24px;
+      text-align: center;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .detail-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-pale);
+      border-radius: 12px;
+      color: var(--gold);
+    }
+
+    .detail-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .detail-value {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .detail-note {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    /* ── Who ── */
+    .who {
+      background: #2b2520;
+      color: #ffffff;
+    }
+    .who .section-label { color: var(--gold); }
+    .who .section-title { color: var(--white); }
+
+    .who-list {
+      margin-top: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .who-tag {
+      padding: 10px 20px;
+      border: 1px solid rgba(176,141,87,0.3);
+      border-radius: 100px;
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.85);
+      transition: all 0.3s ease;
+    }
+    .who-tag:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(176,141,87,0.08);
+    }
+
+    .who-note {
+      margin-top: 36px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.9;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: #2b2520;
+      color: #ffffff;
+      text-align: center;
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(176,141,87,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section .section-label { color: var(--gold); }
+    .cta-section .section-title { color: var(--white); }
+
+    .cta-desc {
+      font-size: 0.98rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 44px;
+      line-height: 1.9;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 17px 48px;
+      background: var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.98rem;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+      transition: all 0.3s ease;
+    }
+    .cta-button:hover {
+      background: var(--gold-light);
+      color: var(--dark-warm);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(176,141,87,0.3);
+    }
+
+    .cta-info {
+      margin-top: 28px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 36px 24px;
+      text-align: center;
+      background: #1a1612;
+    }
+    footer p {
+      font-size: 0.75rem;
+      color: rgba(176,141,87,0.4);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      section { padding: 72px 20px; }
+
+      .hero-brand { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+
+      .theme-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .book-item {
+        grid-template-columns: 1fr;
+        padding: 24px;
+        text-align: center;
+      }
+      .book-cover {
+        width: 130px;
+        height: 180px;
+        margin: 0 auto;
+      }
+      .book-session { left: 24px; }
+
+      .testimonial-grid { grid-template-columns: 1fr; }
+      .details-grid { grid-template-columns: 1fr; gap: 16px; }
+      .who-list { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ Hero ════ -->
+  <section class="hero">
+    <div class="hero-badge">Season 3 · Summer 2026</div>
+    <p class="hero-pretitle">변호사가 만든 전문직 독서모임</p>
+    <div class="hero-brand">Salon P.</div>
+    <h1 class="serif">
+      AI의 파도 앞에 선 당신을 위한<br>항해의 서재
+    </h1>
+    <p class="hero-sub">
+      기술이 아닌 맥락으로, 투자가 아닌 성찰로.<br>
+      전문직이 함께 읽고 대화하는 독서모임.
+    </p>
+    <a href="#apply" class="hero-cta">
+      참여 신청하기
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="hero-scroll">
+      <div class="line"></div>
+      scroll
+    </div>
+  </section>
+
+  <!-- ════ About ════ -->
+  <section class="about">
+    <div class="container reveal">
+      <span class="section-label">About Salon P</span>
+      <h2 class="section-title">전문직의 진짜 성장은<br>지식이 아닌 연결에서 시작됩니다</h2>
+      <div class="divider"></div>
+      <p class="concept-text">
+        <em>'AI'</em>. 운명의 연인처럼, 미래라는데 이미 온 것도 같고 나는 놓친 것 같은 이 시대의 화두에 피로감이 들기도 합니다.
+        <br><br>
+        기술적 지식, 실무적 활용법, 포모의 투자법에서 잠시 벗어나서 &mdash; 운명을 거스르지 않으나 이에 굴복하지도 않고 자신의 항로를 찾았던 <em>오뒷세우스의 마음</em>으로 AI의 파도를 함께 읽어 봅시다.
+      </p>
+      <div class="concept-highlight">
+        두려움은 나누면 절반이 되니까요.<br>
+        이번 시즌, AI가 바꾸는 자신 · 일상 · 세상을 차근차근 함께 읽어 봅니다.
+      </div>
+      <div class="host-info">
+        <div class="host-avatar">P</div>
+        <div>
+          <div class="host-name">모임장, 서울숲장변호사</div>
+          <div class="host-role">Salon P 기획 · 진행</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ Themes ════ -->
+  <section class="themes">
+    <div class="container">
+      <span class="section-label reveal">3 Perspectives</span>
+      <h2 class="section-title reveal">세 권의 책, 세 겹의 시선</h2>
+      <div class="theme-grid">
+        <div class="theme-card reveal">
+          <div class="theme-number">01</div>
+          <div class="theme-label">AI 그리고 자신</div>
+          <h3 class="theme-title">이미 역전된 분야에서<br>나를 돌아보다</h3>
+          <p class="theme-desc">AI에 먼저 역전당한 분야의 사례에서, 지금 자신의 현재를 비추어 봅니다.</p>
+        </div>
+        <div class="theme-card reveal">
+          <div class="theme-number">02</div>
+          <div class="theme-label">AI 그리고 일상</div>
+          <h3 class="theme-title">다가올 혼란을<br>미리 상상하다</h3>
+          <p class="theme-desc">AI 환경에서 겪게 될 일상의 혼란과 변화를 구체적으로 그려 봅니다.</p>
+        </div>
+        <div class="theme-card reveal">
+          <div class="theme-number">03</div>
+          <div class="theme-label">AI 그리고 세상</div>
+          <h3 class="theme-title">무엇을 선택할 것인가</h3>
+          <p class="theme-desc">AI로 구성된 세상에서 우리는 무엇을 선택해야 하는지 함께 질문합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ Books ════ -->
+  <section class="books">
+    <div class="container">
+      <span class="section-label reveal">Reading List</span>
+      <h2 class="section-title reveal">이번 시즌 함께 읽을 책</h2>
+      <div class="divider reveal"></div>
+
+      <div class="book-list">
+        <div class="book-item reveal">
+          <div class="book-session">1st Session</div>
+          <img src="https://image.aladin.co.kr/product/36659/88/cover500/8962626608_1.jpg"
+               alt="먼저 온 미래 표지" class="book-cover" loading="lazy">
+          <div class="book-info">
+            <div class="book-date">2026. 7. 5 (일) 오후 3시</div>
+            <h3 class="book-title">먼저 온 미래</h3>
+            <p class="book-subtitle">AI 이후의 세계를 경험한 사람들</p>
+            <p class="book-author">장강명 · 동아시아</p>
+            <p class="book-desc">
+              알파고 이후, 바둑계는 이미 AI에 역전되었습니다. 기사들의 생생한 증언을 통해
+              '먼저 온 미래'를 경험한 사람들의 이야기를 듣고, 내 분야의 내일을 미리 마주합니다.
+            </p>
+            <span class="book-theme-tag">AI 그리고 자신</span>
+          </div>
+        </div>
+
+        <div class="book-item reveal">
+          <div class="book-session">2nd Session</div>
+          <img src="https://image.aladin.co.kr/product/36591/61/cover500/8936480839_1.jpg"
+               alt="어느 날 미래가 도착했다 표지" class="book-cover" loading="lazy">
+          <div class="book-info">
+            <div class="book-date">2026. 8. 2 (일) 오후 3시</div>
+            <h3 class="book-title">어느 날 미래가 도착했다</h3>
+            <p class="book-subtitle">AI 시대 인간의 조건</p>
+            <p class="book-author">우숙영 · 창비</p>
+            <p class="book-desc">
+              AI가 만든 글, AI가 판단하는 채용, AI가 추천하는 일상 — 이미 도착한 미래 속에서
+              흔들리는 인간의 조건을 살펴보고, 다가올 혼란을 함께 상상합니다.
+            </p>
+            <span class="book-theme-tag">AI 그리고 일상</span>
+          </div>
+        </div>
+
+        <div class="book-item reveal">
+          <div class="book-session">3rd Session</div>
+          <img src="https://image.aladin.co.kr/product/30864/83/cover500/k412831575_2.jpg"
+               alt="AI 2041 표지" class="book-cover" loading="lazy">
+          <div class="book-info">
+            <div class="book-date">2026. 9. 6 (일) 오후 3시</div>
+            <h3 class="book-title">AI 2041</h3>
+            <p class="book-subtitle">10개의 결정적 장면으로 읽는 인공지능과 인류의 미래</p>
+            <p class="book-author">리카이푸, 천추판 · 한빛비즈</p>
+            <p class="book-desc">
+              AI 석학과 SF 작가가 그려낸 10개의 미래 시나리오.
+              기술의 구체적 전망 위에서, 그래서 우리는 무엇을 선택해야 하는지 함께 질문합니다.
+            </p>
+            <span class="book-theme-tag">AI 그리고 세상</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ Testimonials ════ -->
+  <section class="testimonials">
+    <div class="container">
+      <span class="section-label reveal">Voices</span>
+      <h2 class="section-title reveal">지난 시즌 참여자 후기</h2>
+      <div class="divider reveal"></div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card reveal">
+          <p class="testimonial-quote">
+            같은 책을 읽어도 변호사, 의사, 개발자의 시선이 이렇게 다르다는 게 매번 놀랍습니다. 모임이 끝나면 책을 한 번 더 읽게 돼요.
+          </p>
+          <div class="testimonial-author"><span>홍 ㅇㅇ</span> · 의사</div>
+        </div>
+        <div class="testimonial-card reveal">
+          <p class="testimonial-quote">
+            투자 포럼이나 테크 세미나에서는 못 나누는 대화가 여기선 가능합니다. 기술이 아니라 '사람'을 중심에 놓고 이야기하니까요.
+          </p>
+          <div class="testimonial-author"><span>이 ㅇㅇ</span> · 대학교수</div>
+        </div>
+        <div class="testimonial-card reveal">
+          <p class="testimonial-quote">
+            전문직이라 일상에서 독서 토론할 기회가 없었는데, 이 모임은 수준과 분위기 모두 딱 맞습니다. 매 시즌 참여 중입니다.
+          </p>
+          <div class="testimonial-author"><span>박 ㅇㅇ</span> · 변리사</div>
+        </div>
+        <div class="testimonial-card reveal">
+          <p class="testimonial-quote">
+            다른 분야 전문가들이 AI를 어떻게 받아들이는지 들으면서, 제 사업의 방향을 다시 생각하게 됐습니다. 혼자 읽었으면 못 얻은 시야예요.
+          </p>
+          <div class="testimonial-author"><span>최 ㅇㅇ</span> · 창업가</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ Details ════ -->
+  <section class="details">
+    <div class="container">
+      <span class="section-label reveal">Details</span>
+      <h2 class="section-title reveal">모임 안내</h2>
+      <div class="divider reveal"></div>
+
+      <div class="details-grid reveal">
+        <div class="detail-card">
+          <div class="detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          </div>
+          <div class="detail-label">일정</div>
+          <div class="detail-value">
+            7/5 · 8/2 · 9/6<br>
+            일요일 오후 3시
+          </div>
+          <p class="detail-note">총 3회, 월 1회 진행</p>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="detail-label">장소</div>
+          <div class="detail-value">
+            서울 · VIP 라운지
+          </div>
+          <p class="detail-note">지난 시즌과 동일한 장소<br>상세 주소 추후 공지</p>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="detail-label">참여 비용</div>
+          <div class="detail-value">
+            27만원<small style="font-size:0.65em;color:var(--text-light);font-family:'Noto Sans KR',sans-serif"> / 3회</small>
+          </div>
+          <p class="detail-note">우리은행 1005-304-552552<br>(주)로지피티</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ Who ════ -->
+  <section class="who">
+    <div class="container">
+      <span class="section-label reveal">For Whom</span>
+      <h2 class="section-title reveal">이런 분들과 함께합니다</h2>
+      <div class="who-list reveal">
+        <span class="who-tag">의사</span>
+        <span class="who-tag">변호사</span>
+        <span class="who-tag">대학교수</span>
+        <span class="who-tag">변리사</span>
+        <span class="who-tag">약사</span>
+        <span class="who-tag">회계사</span>
+        <span class="who-tag">개발자</span>
+        <span class="who-tag">창업가</span>
+        <span class="who-tag">기자</span>
+        <span class="who-tag">그 외 전문직</span>
+      </div>
+      <p class="who-note reveal">
+        AI에 대한 기술적 배경지식은 필요하지 않습니다.<br>
+        각자의 분야에서 AI가 가져올 변화에 대해 생각하고 싶은 분이라면 환영합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════ CTA ════ -->
+  <section class="cta-section" id="apply">
+    <div class="container">
+      <span class="section-label reveal">Apply Now</span>
+      <h2 class="section-title reveal">당신의 서재가<br>네트워크가 되는 곳</h2>
+      <p class="cta-desc reveal">
+        소수 정예로 운영되며, 인원 마감 시 조기 종료될 수 있습니다.
+      </p>
+      <a href="https://tally.so/r/RGr5pv" target="_blank" class="cta-button reveal">
+        참여 신청하기
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="cta-info reveal">본인 명의 입금 + 사전설문폼 작성 후 참여가 확정됩니다.</p>
+    </div>
+  </section>
+
+  <!-- ════ Footer ════ -->
+  <footer>
+    <p>Salon P &nbsp;·&nbsp; 변호사가 만든 전문직 독서모임 &nbsp;·&nbsp; (주)로지피티</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
